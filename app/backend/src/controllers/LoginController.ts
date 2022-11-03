@@ -16,6 +16,9 @@ export default class LoginController {
   async login(req: Request, res: Response) {
     const { email, password } = req.body;
     const user = await loginService.findOneUser(email);
+    if (!email) {
+      return res.status(400).json({ message: 'All fields must be filled' });
+    }
     if (!user) {
       throw new Error('Usuário não localizado');
     }
