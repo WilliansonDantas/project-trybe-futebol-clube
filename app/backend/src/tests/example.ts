@@ -4,7 +4,7 @@ import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 
 import { app } from '../app';
-import Users from '../database/models/Users';
+import Example from '../database/models/ExampleModel';
 
 import { Response } from 'superagent';
 
@@ -12,7 +12,7 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe('Teste rota user', () => {
+describe('Seu teste', () => {
   /**
    * Exemplo do uso de stubs com tipos
    */
@@ -39,7 +39,7 @@ describe('Teste rota user', () => {
   //   expect(...)
   // });
 
-  it('Rota funcionando', () => {
+  it('Seu sub-teste', () => {
     expect(false).to.be.eq(true);
   });
 });

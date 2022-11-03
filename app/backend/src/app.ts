@@ -1,4 +1,7 @@
 import * as express from 'express';
+// código will
+import loginRouter from './routers/loginRouter';
+// código will
 
 class App {
   public app: express.Express;
@@ -7,6 +10,11 @@ class App {
     this.app = express();
 
     this.config();
+    // código will
+
+    this.router();
+
+    // código will
 
     // Não remover essa rota
     this.app.get('/', (req, res) => res.json({ ok: true }));
@@ -23,6 +31,14 @@ class App {
     this.app.use(express.json());
     this.app.use(accessControl);
   }
+
+  // código will
+
+  private router(): void {
+    this.app.use(loginRouter);
+  }
+
+  // código will
 
   public start(PORT: string | number):void {
     this.app.listen(PORT, () => console.log(`Running on port ${PORT}`));
