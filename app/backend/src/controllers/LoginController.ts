@@ -1,6 +1,7 @@
 import { compare } from 'bcryptjs';
 import { Request, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
+import HttpException from '../utils/HttpException';
 import IUser from '../interfaces/IUser';
 import SequelizeFindOneUser from '../repositories/SequelizeFindOneUser';
 import LoginService from '../services/LoginService';
@@ -9,8 +10,7 @@ import LoginService from '../services/LoginService';
 const sequelizeFindOneUser = new SequelizeFindOneUser();
 const loginService = new LoginService(sequelizeFindOneUser);
 const secret = process.env.JWT_SECRET || 'seusecretdetoken';
-// const emailRegex = /\S+@\S+\.\S+/;
-// const six = 6;
+const error401 = 'Incorrect email or password';
 
 export default class LoginController {
   private _compare = compare;
@@ -18,15 +18,12 @@ export default class LoginController {
 
   async login(req: Request, res: Response) {
     const { email, password } = req.body;
+    LoginController.bodyValidated(email, password);
+    LoginController.emailValidated(email);
+    LoginController.passwordValidated(password);
     const user = await loginService.findOneUser(email);
-    if (!email || !password) {
-      return res.status(400).json({ message: 'All fields must be filled' });
-    }
-    // if (email.match(/\S+@\S+\.\S+/) === null || password.length <= 6) {
-    //   return res.status(401).json({ message: 'Incorrect email or password' });
-    // }
     if (!user) {
-      throw new Error('Usuário não localizado');
+      throw new HttpException(401, error401);
     }
     const boolDecode = await this.decodify(password, user.password);
     if (!boolDecode) {
@@ -38,7 +35,19 @@ export default class LoginController {
 
   private static bodyValidated(email: string, password: string) {
     if (!email || !password) {
-      throw new Error('All fields must be filled');
+      throw new HttpException(400, 'All fields must be filled');
+    }
+  }
+
+  private static emailValidated(email: string) {
+    if (email.match(/\S+@\S+\.\S+/) === null) {
+      throw new HttpException(401, error401);
+    }
+  }
+
+  private static passwordValidated(password: string) {
+    if (password.length <= 6) {
+      throw new HttpException(401, error401);
     }
   }
 
