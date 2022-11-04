@@ -22,9 +22,9 @@ export default class LoginController {
     if (!email || !password) {
       return res.status(400).json({ message: 'All fields must be filled' });
     }
-    if (email.match(/\S+@\S+\.\S+/) === null || password.length <= 6) {
-      return res.status(401).json({ message: 'Incorrect email or password' });
-    }
+    // if (email.match(/\S+@\S+\.\S+/) === null || password.length <= 6) {
+    //   return res.status(401).json({ message: 'Incorrect email or password' });
+    // }
     if (!user) {
       throw new Error('Usuário não localizado');
     }
