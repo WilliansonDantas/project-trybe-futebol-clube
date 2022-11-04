@@ -27,7 +27,7 @@ export default class LoginController {
     }
     const boolDecode = await this.decodify(password, user.password);
     if (!boolDecode) {
-      throw new Error('Senha deu ruim');
+      throw new HttpException(401, error401);
     }
     const token = this.token(user);
     return res.status(200).json({ token });
