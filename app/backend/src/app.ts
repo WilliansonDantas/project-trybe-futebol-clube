@@ -5,6 +5,7 @@ import { NextFunction, Request, Response } from 'express';
 import ErrorHandler from './middlewares/ErrorHandler';
 import loginRouter from './routers/loginRouter';
 import HttpException from './utils/HttpException';
+import loginValidateRouter from './routers/loginValidateRouter';
 
 // código will
 
@@ -42,6 +43,7 @@ class App {
 
   private router(): void {
     this.app.use(loginRouter);
+    this.app.use(loginValidateRouter);
   }
 
   // código will

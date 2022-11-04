@@ -5,7 +5,6 @@ import HttpException from '../utils/HttpException';
 import IUser from '../interfaces/IUser';
 import SequelizeFindOneUser from '../repositories/SequelizeFindOneUser';
 import LoginService from '../services/LoginService';
-// import LoginValidation from '../validations/LoginValidation';
 
 const sequelizeFindOneUser = new SequelizeFindOneUser();
 const loginService = new LoginService(sequelizeFindOneUser);
