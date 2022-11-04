@@ -1,6 +1,11 @@
 import * as express from 'express';
 // código will
+import 'express-async-errors';
+import { NextFunction, Request, Response } from 'express';
+import ErrorHandler from './middlewares/ErrorHandler';
 import loginRouter from './routers/loginRouter';
+import HttpException from './utils/HttpException';
+
 // código will
 
 class App {
@@ -13,7 +18,8 @@ class App {
     // código will
 
     this.router();
-
+    this.app.use((error: HttpException, req: Request, res: Response, next: NextFunction) =>
+      ErrorHandler.handle(error, req, res, next));
     // código will
 
     // Não remover essa rota

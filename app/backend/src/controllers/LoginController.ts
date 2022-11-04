@@ -36,6 +36,12 @@ export default class LoginController {
     return res.status(200).json({ token });
   }
 
+  private static bodyValidated(email: string, password: string) {
+    if (!email || !password) {
+      throw new Error('All fields must be filled');
+    }
+  }
+
   private async decodify(password: string, hash: string): Promise<boolean> {
     const validatePassword = await this._compare(password, hash);
     return validatePassword;
