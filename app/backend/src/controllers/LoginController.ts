@@ -4,10 +4,13 @@ import * as jwt from 'jsonwebtoken';
 import IUser from '../interfaces/IUser';
 import SequelizeFindOneUser from '../repositories/SequelizeFindOneUser';
 import LoginService from '../services/LoginService';
+// import LoginValidation from '../validations/LoginValidation';
 
 const sequelizeFindOneUser = new SequelizeFindOneUser();
 const loginService = new LoginService(sequelizeFindOneUser);
 const secret = process.env.JWT_SECRET || 'seusecretdetoken';
+// const emailRegex = /\S+@\S+\.\S+/;
+// const six = 6;
 
 export default class LoginController {
   private _compare = compare;
@@ -18,6 +21,9 @@ export default class LoginController {
     const user = await loginService.findOneUser(email);
     if (!email || !password) {
       return res.status(400).json({ message: 'All fields must be filled' });
+    }
+    if (email.match(/\S+@\S+\.\S+/) === null || password.length <= 6) {
+      return res.status(401).json({ message: 'Incorrect email or password' });
     }
     if (!user) {
       throw new Error('Usuário não localizado');
