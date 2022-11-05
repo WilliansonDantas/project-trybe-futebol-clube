@@ -6,6 +6,7 @@ import ErrorHandler from './middlewares/ErrorHandler';
 import loginRouter from './routers/loginRouter';
 import teamsRouter from './routers/teamsRouter';
 import teamsIdRouter from './routers/teamsIdRouter';
+import matchesRouter from './routers/matchesRouter';
 import HttpException from './utils/HttpException';
 import loginValidateRouter from './routers/loginValidateRouter';
 
@@ -48,6 +49,7 @@ class App {
     this.app.use(loginValidateRouter);
     this.app.use(teamsIdRouter);
     this.app.use(teamsRouter);
+    this.app.use(matchesRouter);
   }
 
   // código will
