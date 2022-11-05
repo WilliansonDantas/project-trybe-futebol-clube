@@ -2,8 +2,14 @@ import { Request, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
 import HttpException from '../utils/HttpException';
 import MatchesPostService from '../services/MatchesPostService';
+import TeamsIdService from '../services/TeamsIdService';
+import SequelizeFindByPkTeams from '../repositories/SequelizeFindByPkTeams';
+import 'express-async-errors';
 
 const secret = process.env.JWT_SECRET || 'seusecretdetoken';
+
+const sequelizeFindByPkTeams = new SequelizeFindByPkTeams();
+const teamsIdService = new TeamsIdService(sequelizeFindByPkTeams);
 
 export default class MatchesPostController {
   private _service;
@@ -15,8 +21,12 @@ export default class MatchesPostController {
 
   async create(req: Request, res: Response) {
     const { homeTeam, awayTeam } = req.body;
+
     // const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = req.body;
-    MatchesPostController.teamsDifferent(homeTeam, awayTeam);
+    // const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = req.body;
+
+    MatchesPostController.teamsDifferent(Number(homeTeam), Number(awayTeam));
+    await MatchesPostController.teamsExist(Number(homeTeam), Number(awayTeam));
     const token = req.header('Authorization') as string;
     this.decodify(token);
     const inProgress = true;
@@ -34,20 +44,16 @@ export default class MatchesPostController {
   }
 
   private static teamsDifferent(homeTeam: number, awayTeam: number) {
-    if (Number(homeTeam) === Number(awayTeam)) {
+    if (homeTeam === awayTeam) {
       throw new HttpException(422, 'It is not possible to create a match with two equal teams');
     }
   }
 
-  // private static emailValidated(email: string) {
-  //   if (email.match(/\S+@\S+\.\S+/) === null) {
-  //     throw new HttpException(401, error401);
-  //   }
-  // }
-
-  // private static passwordValidated(password: string) {
-  //   if (password.length <= 6) {
-  //     throw new HttpException(401, error401);
-  //   }
-  // }
+  private static async teamsExist(homeTeam: number, awayTeam: number) {
+    const teamHome = await teamsIdService.findByPk(homeTeam);
+    const teamAway = await teamsIdService.findByPk(awayTeam);
+    if (!teamHome || !teamAway) {
+      throw new HttpException(404, 'There is no team with such id!');
+    }
+  }
 }
