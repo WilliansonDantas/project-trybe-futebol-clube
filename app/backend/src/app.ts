@@ -4,6 +4,7 @@ import 'express-async-errors';
 import { NextFunction, Request, Response } from 'express';
 import ErrorHandler from './middlewares/ErrorHandler';
 import loginRouter from './routers/loginRouter';
+import teamsRouter from './routers/teamsRouter';
 import HttpException from './utils/HttpException';
 import loginValidateRouter from './routers/loginValidateRouter';
 
@@ -44,6 +45,7 @@ class App {
   private router(): void {
     this.app.use(loginRouter);
     this.app.use(loginValidateRouter);
+    this.app.use(teamsRouter);
   }
 
   // código will
