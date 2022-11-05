@@ -7,6 +7,7 @@ import loginRouter from './routers/loginRouter';
 import teamsRouter from './routers/teamsRouter';
 import teamsIdRouter from './routers/teamsIdRouter';
 import matchesRouter from './routers/matchesRouter';
+import matchesPostRouter from './routers/matchesPostRouter';
 import HttpException from './utils/HttpException';
 import loginValidateRouter from './routers/loginValidateRouter';
 
@@ -45,6 +46,7 @@ class App {
   // código will
 
   private router(): void {
+    this.app.use(matchesPostRouter);
     this.app.use(loginRouter);
     this.app.use(loginValidateRouter);
     this.app.use(teamsIdRouter);
