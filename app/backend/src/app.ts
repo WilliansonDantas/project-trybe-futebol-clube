@@ -9,6 +9,7 @@ import teamsIdRouter from './routers/teamsIdRouter';
 import matchesRouter from './routers/matchesRouter';
 import matchesPostRouter from './routers/matchesPostRouter';
 import matchesPatchRouter from './routers/matchesPatchRouter';
+import matchesPatchIdRouter from './routers/matchesPatchIdRouter';
 import HttpException from './utils/HttpException';
 import loginValidateRouter from './routers/loginValidateRouter';
 
@@ -48,6 +49,7 @@ class App {
 
   private router(): void {
     this.app.use(matchesPatchRouter);
+    this.app.use(matchesPatchIdRouter);
     this.app.use(matchesPostRouter);
     this.app.use(loginRouter);
     this.app.use(loginValidateRouter);

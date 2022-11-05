@@ -21,10 +21,6 @@ export default class MatchesPostController {
 
   async create(req: Request, res: Response) {
     const { homeTeam, awayTeam } = req.body;
-
-    // const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = req.body;
-    // const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = req.body;
-
     MatchesPostController.teamsDifferent(Number(homeTeam), Number(awayTeam));
     await MatchesPostController.teamsExist(Number(homeTeam), Number(awayTeam));
     const token = req.header('Authorization') as string;
