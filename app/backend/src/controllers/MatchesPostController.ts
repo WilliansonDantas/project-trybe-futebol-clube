@@ -39,7 +39,7 @@ export default class MatchesPostController {
       const payloadVerify = this._jwt.verify(token, secret) as jwt.JwtPayload;
       return payloadVerify;
     } catch (e) {
-      throw new HttpException(404, 'Expired or invalid token');
+      throw new HttpException(401, 'Token must be a valid token');
     }
   }
 
