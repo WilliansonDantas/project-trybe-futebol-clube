@@ -13,6 +13,7 @@ import matchesPatchIdRouter from './routers/matchesPatchIdRouter';
 import HttpException from './utils/HttpException';
 import loginValidateRouter from './routers/loginValidateRouter';
 import leaderboardRouter from './routers/leaderboardRouter';
+import leaderboardAwayRouter from './routers/leaderboardAwayRouter';
 
 // código will
 
@@ -58,6 +59,7 @@ class App {
     this.app.use(matchesPostRouter);
     this.app.use(matchesRouter);
     this.app.use(leaderboardRouter);
+    this.app.use(leaderboardAwayRouter);
   }
 
   // código will
