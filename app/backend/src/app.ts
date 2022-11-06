@@ -12,8 +12,9 @@ import matchesPatchRouter from './routers/matchesPatchRouter';
 import matchesPatchIdRouter from './routers/matchesPatchIdRouter';
 import HttpException from './utils/HttpException';
 import loginValidateRouter from './routers/loginValidateRouter';
-import leaderboardRouter from './routers/leaderboardRouter';
+import leaderboardHomeRouter from './routers/leaderboardHomeRouter';
 import leaderboardAwayRouter from './routers/leaderboardAwayRouter';
+import leaderboardRouter from './routers/leaderboardRouter';
 
 // código will
 
@@ -58,8 +59,9 @@ class App {
     this.app.use(matchesPatchIdRouter);
     this.app.use(matchesPostRouter);
     this.app.use(matchesRouter);
-    this.app.use(leaderboardRouter);
+    this.app.use(leaderboardHomeRouter);
     this.app.use(leaderboardAwayRouter);
+    this.app.use(leaderboardRouter);
   }
 
   // código will

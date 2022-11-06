@@ -1,14 +1,12 @@
 import { Router } from 'express';
-import LeaderboardHomeController from '../controllers/LeaderboardHomeController';
-import LeaderboardHomeService from '../services/LeaderboardHomeService';
-import SequelizeFindAllMatches from '../repositories/SequelizeFindAllMatches';
+import LeaderboardController from '../controllers/LeaderboardController';
+import LeaderboardService from '../services/LeaderboardService';
 
-const sequelizeFindAllMatches = new SequelizeFindAllMatches();
-const leaderboardHomeService = new LeaderboardHomeService(sequelizeFindAllMatches);
-const leaderboardHomeController = new LeaderboardHomeController(leaderboardHomeService);
+const leaderboardService = new LeaderboardService();
+const leaderboardController = new LeaderboardController(leaderboardService);
 
 const router = Router();
 
-router.get('/leaderboard/home', (req, res) => leaderboardHomeController.objTable(req, res));
+router.get('/leaderboard', (req, res) => leaderboardController.objTable(req, res));
 
 export default router;

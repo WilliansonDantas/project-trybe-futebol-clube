@@ -53,10 +53,6 @@ export default class LeaderboardHomeService {
     this._leaderboard = arrayLeaderboardA;
   }
 
-  private arrayIMatches() {
-    this._matchers.forEach((match) => this.objLeaderboard(match));
-  }
-
   private totalGames(match: IMatches) {
     let acumulator = 0;
     this._matchers.forEach((matcher) => {

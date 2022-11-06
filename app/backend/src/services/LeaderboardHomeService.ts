@@ -3,14 +3,17 @@ import SequelizeFindAllMatches from '../repositories/SequelizeFindAllMatches';
 import IMatches from '../interfaces/IMatches';
 import ILeaderboardHome from '../interfaces/ILeaderboardHome';
 
-export default class LeaderboardHomeService extends MatchesService {
+const sequelizeFindAllMatches = new SequelizeFindAllMatches();
+const matchesService = new MatchesService(sequelizeFindAllMatches);
+
+export default class LeaderboardHomeService {
   private _matchers: IMatches[];
   private _leaderboard: ILeaderboardHome[];
 
-  constructor(repository: SequelizeFindAllMatches) {
-    super(repository);
-    this._leaderboard = [];
-  }
+  // constructor(repository: SequelizeFindAllMatches) {
+  //   super(repository);
+  //   this._leaderboard = [];
+  // }
 
   async main() {
     await this.findAllHome();
@@ -22,7 +25,7 @@ export default class LeaderboardHomeService extends MatchesService {
   }
 
   private async findAllHome() {
-    this._matchers = await super.findAll();
+    this._matchers = await matchesService.findAll();
   }
 
   private filter() {
