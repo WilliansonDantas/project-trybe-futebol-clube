@@ -13,6 +13,6 @@ export default class MatchesPatchIdController {
     const { homeTeamGoals, awayTeamGoals } = req.body;
     await this._service
       .update(Number(homeTeamGoals), Number(awayTeamGoals), Number(id));
-    return res.status(200).json();
+    return res.status(200).json({ message: 'Finished' });
   }
 }

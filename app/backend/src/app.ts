@@ -48,14 +48,14 @@ class App {
   // código will
 
   private router(): void {
+    this.app.use(loginValidateRouter);
+    this.app.use(loginRouter);
+    this.app.use(teamsIdRouter);
+    this.app.use(teamsRouter);
     this.app.use(matchesPatchRouter);
     this.app.use(matchesPatchIdRouter);
     this.app.use(matchesPostRouter);
     this.app.use(matchesRouter);
-    this.app.use(teamsIdRouter);
-    this.app.use(teamsRouter);
-    this.app.use(loginRouter);
-    this.app.use(loginValidateRouter);
   }
 
   // código will
