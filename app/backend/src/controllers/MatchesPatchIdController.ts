@@ -11,7 +11,8 @@ export default class MatchesPatchIdController {
   async update(req: Request, res: Response) {
     const { id } = req.params;
     const { homeTeamGoals, awayTeamGoals } = req.body;
-    await this._service.update(Number(homeTeamGoals), Number(awayTeamGoals), Number(id));
+    await this._service
+      .update(Number(homeTeamGoals), Number(awayTeamGoals), Number(id));
     return res.status(200).json();
   }
 }
