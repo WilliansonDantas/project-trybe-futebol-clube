@@ -3,9 +3,6 @@ import SequelizeFindAllMatches from '../repositories/SequelizeFindAllMatches';
 import IMatches from '../interfaces/IMatches';
 import ILeaderboardHome from '../interfaces/ILeaderboardHome';
 
-// const sequelizeFindAllMatches = new SequelizeFindAllMatches();
-// const matchesService = new MatchesService(sequelizeFindAllMatches);
-
 export default class LeaderboardHomeService extends MatchesService {
   private _matchers: IMatches[];
   private _leaderboard: ILeaderboardHome[];

@@ -3,23 +3,23 @@ import SequelizeFindAllMatches from '../repositories/SequelizeFindAllMatches';
 import IMatches from '../interfaces/IMatches';
 import ILeaderboardAway from '../interfaces/ILeaderboardAway';
 
+const sequelizeFindAllMatches = new SequelizeFindAllMatches();
+const matchesService = new MatchesService(sequelizeFindAllMatches);
+
 export default class LeaderboardHomeService {
   private _matchers: IMatches[];
   private _leaderboard: ILeaderboardAway[] = [];
-  private sequelizeFindAllMatches = new SequelizeFindAllMatches();
-  private matchesService = new MatchesService(this.sequelizeFindAllMatches);
 
   async main() {
     await this.findAll();
     this.filter();
-    this.arrayIMatches();
-    this.duplicateReduce();
+    this.arrayLeaderboardAway();
     this.sortLeaderboard();
     return this._leaderboard;
   }
 
   private async findAll() {
-    this._matchers = await this.matchesService.findAll();
+    this._matchers = await matchesService.findAll();
   }
 
   private filter() {
@@ -39,23 +39,22 @@ export default class LeaderboardHomeService {
       goalsBalance: this.goalsBalance(match),
       efficiency: this.efficiency(match),
     };
-    this._leaderboard.push(leaderboardAway);
+    return leaderboardAway;
+  }
+
+  private arrayLeaderboardAway() {
+    const arrayLeaderboardA: ILeaderboardAway[] = [];
+    this._matchers.forEach((match) => {
+      if (!arrayLeaderboardA
+        .some((leaderboard: ILeaderboardAway) => leaderboard.name === match?.teamAway?.teamName)) {
+        arrayLeaderboardA.push(this.objLeaderboard(match));
+      }
+    });
+    this._leaderboard = arrayLeaderboardA;
   }
 
   private arrayIMatches() {
     this._matchers.forEach((match) => this.objLeaderboard(match));
-  }
-
-  private duplicateReduce() {
-    const itemRepeat = this._leaderboard
-      .reduce((acc: ILeaderboardAway[], item: ILeaderboardAway) => {
-        const acum = acc;
-        if (!acum.some((leaderboard: ILeaderboardAway) => leaderboard.name === item.name)) {
-          acum.push(item);
-        }
-        return acum;
-      }, []);
-    this._leaderboard = itemRepeat;
   }
 
   private totalGames(match: IMatches) {
