@@ -18,8 +18,7 @@ export default class LeaderboardHomeService extends MatchesService {
   async main() {
     await this.findAllHome();
     this.filter();
-    this.arrayIMatches();
-    this.duplicateReduce();
+    this.arrayLeaderboardHome();
     this.sortLeaderboardDismember();
     this.sortLeaderboardTotalPoints();
     return this._leaderboard;
@@ -46,23 +45,18 @@ export default class LeaderboardHomeService extends MatchesService {
       goalsBalance: this.goalsBalance(match),
       efficiency: this.efficiency(match),
     };
-    this._leaderboard.push(leaderboardHome);
+    return leaderboardHome;
   }
 
-  private arrayIMatches() {
-    this._matchers.forEach((match) => this.objLeaderboard(match));
-  }
-
-  private duplicateReduce() {
-    const itemRepeat = this._leaderboard
-      .reduce((acc: ILeaderboardHome[], item: ILeaderboardHome) => {
-        const acum = acc;
-        if (!acum.some((leaderboard: ILeaderboardHome) => leaderboard.name === item.name)) {
-          acum.push(item);
-        }
-        return acum;
-      }, []);
-    this._leaderboard = itemRepeat;
+  private arrayLeaderboardHome() {
+    const arrayLeaderboardH: ILeaderboardHome[] = [];
+    this._matchers.forEach((match) => {
+      if (!arrayLeaderboardH
+        .some((leaderboard: ILeaderboardHome) => leaderboard.name === match?.teamHome?.teamName)) {
+        arrayLeaderboardH.push(this.objLeaderboard(match));
+      }
+    });
+    this._leaderboard = arrayLeaderboardH;
   }
 
   private totalGames(match: IMatches) {
@@ -170,8 +164,3 @@ export default class LeaderboardHomeService extends MatchesService {
     });
   }
 }
-// books.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
-// this._leaderboard = this._leaderboard.sort((a, b) => b.goalsFavor - a.goalsFavor);
-// this._leaderboard = this._leaderboard.sort((a, b) => b.goalsBalance - a.goalsBalance);
-// this._leaderboard = this._leaderboard.sort((a, b) => b.totalVictories - a.totalVictories);
-// this._leaderboard = this._leaderboard.sort((a, b) => b.totalPoints - a.totalPoints);
