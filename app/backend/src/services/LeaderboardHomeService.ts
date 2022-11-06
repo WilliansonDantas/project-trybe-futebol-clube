@@ -3,24 +3,24 @@ import SequelizeFindAllMatches from '../repositories/SequelizeFindAllMatches';
 import IMatches from '../interfaces/IMatches';
 import ILeaderboardHome from '../interfaces/ILeaderboardHome';
 
-const sequelizeFindAllMatches = new SequelizeFindAllMatches();
-const matchesService = new MatchesService(sequelizeFindAllMatches);
-
 export default class LeaderboardHomeService {
   private _matchers: IMatches[];
   private _leaderboard: ILeaderboardHome[] = [];
+  private sequelizeFindAllMatches = new SequelizeFindAllMatches();
+  private matchesService = new MatchesService(this.sequelizeFindAllMatches);
 
   async main() {
     await this.findAll();
     this.filter();
     this.arrayIMatches();
     this.duplicateReduce();
-    this.sortLeaderboard();
+    this.sortLeaderboardDismember();
+    this.sortLeaderboardTotalPoints();
     return this._leaderboard;
   }
 
   private async findAll() {
-    this._matchers = await matchesService.findAll();
+    this._matchers = await this.matchesService.findAll();
   }
 
   private filter() {
@@ -138,11 +138,34 @@ export default class LeaderboardHomeService {
     return ((totalPoints / (totalGames * 3)) * 100).toFixed(2);
   }
 
-  private sortLeaderboard() {
-    this._leaderboard = this._leaderboard.sort((a, b) => a.goalsOwn - b.goalsOwn);
-    this._leaderboard = this._leaderboard.sort((a, b) => b.goalsFavor - a.goalsFavor);
-    this._leaderboard = this._leaderboard.sort((a, b) => b.goalsBalance - a.goalsBalance);
-    this._leaderboard = this._leaderboard.sort((a, b) => b.totalVictories - a.totalVictories);
-    this._leaderboard = this._leaderboard.sort((a, b) => b.totalPoints - a.totalPoints);
+  private sortLeaderboardDismember() {
+    this._leaderboard.sort((a, b) => {
+      if (a.goalsOwn < b.goalsOwn) return 1;
+      if (a.goalsOwn > b.goalsOwn) return -1; return 0;
+    });
+    this._leaderboard.sort((a, b) => {
+      if (a.goalsFavor < b.goalsFavor) return 1;
+      if (a.goalsFavor > b.goalsFavor) return -1; return 0;
+    });
+    this._leaderboard.sort((a, b) => {
+      if (a.goalsBalance < b.goalsBalance) return 1;
+      if (a.goalsBalance > b.goalsBalance) return -1; return 0;
+    });
+    this._leaderboard.sort((a, b) => {
+      if (a.totalVictories < b.totalVictories) return 1;
+      if (a.totalVictories > b.totalVictories) return -1; return 0;
+    });
+  }
+
+  private sortLeaderboardTotalPoints() {
+    this._leaderboard.sort((a, b) => {
+      if (a.totalPoints < b.totalPoints) return 1;
+      if (a.totalPoints > b.totalPoints) return -1; return 0;
+    });
   }
 }
+// books.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
+// this._leaderboard = this._leaderboard.sort((a, b) => b.goalsFavor - a.goalsFavor);
+// this._leaderboard = this._leaderboard.sort((a, b) => b.goalsBalance - a.goalsBalance);
+// this._leaderboard = this._leaderboard.sort((a, b) => b.totalVictories - a.totalVictories);
+// this._leaderboard = this._leaderboard.sort((a, b) => b.totalPoints - a.totalPoints);

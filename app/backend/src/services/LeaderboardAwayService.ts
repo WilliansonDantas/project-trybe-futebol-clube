@@ -139,10 +139,10 @@ export default class LeaderboardHomeService {
   }
 
   private sortLeaderboard() {
-    this._leaderboard = this._leaderboard.sort((a, b) => a.goalsOwn - b.goalsOwn);
-    this._leaderboard = this._leaderboard.sort((a, b) => b.goalsFavor - a.goalsFavor);
-    this._leaderboard = this._leaderboard.sort((a, b) => b.goalsBalance - a.goalsBalance);
-    this._leaderboard = this._leaderboard.sort((a, b) => b.totalVictories - a.totalVictories);
-    this._leaderboard = this._leaderboard.sort((a, b) => b.totalPoints - a.totalPoints);
+    this._leaderboard.sort((a, b) => a.goalsOwn - b.goalsOwn);
+    this._leaderboard.sort((a, b) => b.goalsFavor - a.goalsFavor);
+    this._leaderboard.sort((a, b) => b.goalsBalance - a.goalsBalance);
+    this._leaderboard.sort((a, b) => b.totalVictories - a.totalVictories);
+    this._leaderboard.sort((a, b) => b.totalPoints - a.totalPoints);
   }
 }
