@@ -10,6 +10,6 @@ export default class LeaderboardHomeController {
 
   async objTable(req: Request, res: Response) {
     const informationAll = await this._service.main();
-    res.status(200).json(informationAll);
+    return res.status(200).json(informationAll);
   }
 }

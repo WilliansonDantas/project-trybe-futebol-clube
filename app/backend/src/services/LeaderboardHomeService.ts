@@ -3,11 +3,12 @@ import SequelizeFindAllMatches from '../repositories/SequelizeFindAllMatches';
 import IMatches from '../interfaces/IMatches';
 import ILeaderboardHome from '../interfaces/ILeaderboardHome';
 
+const sequelizeFindAllMatches = new SequelizeFindAllMatches();
+const matchesService = new MatchesService(sequelizeFindAllMatches);
+
 export default class LeaderboardHomeService {
   private _matchers: IMatches[];
   private _leaderboard: ILeaderboardHome[] = [];
-  private sequelizeFindAllMatches = new SequelizeFindAllMatches();
-  private matchesService = new MatchesService(this.sequelizeFindAllMatches);
 
   async main() {
     await this.findAll();
@@ -20,7 +21,8 @@ export default class LeaderboardHomeService {
   }
 
   private async findAll() {
-    this._matchers = await this.matchesService.findAll();
+    this._matchers = await matchesService.findAll();
+    // console.log(this._matchers);
   }
 
   private filter() {
