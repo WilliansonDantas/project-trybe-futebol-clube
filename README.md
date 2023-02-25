@@ -1,7 +1,6 @@
 
 # ⚽ Trybe Futebol Clube
 
------
 
 O TFC é um site informativo sobre partidas e classificações de futebol!
 
@@ -11,7 +10,6 @@ O TFC é um site informativo sobre partidas e classificações de futebol!
 
 ## 📋 Execute o projeto em sua máquina
 
------
 
 Clone o repositório:
 
@@ -61,7 +59,6 @@ Na sua máquina você deve ter:
 
 ## 🔎 Documentação da API
 
------
 
 #### Login
 
