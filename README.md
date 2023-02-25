@@ -11,13 +11,17 @@ O TFC é um site informativo sobre partidas e classificações de futebol!
 
 ## 📋 Execute o projeto em sua máquina
 
+-----
+
 Clone o repositório:
 
 ```
-git clone 
+git clone git@github.com:WilliansonDantas/project-trybe-futebol-clube.git
 cd trybe-futebol-clube
 npm install
 ```
+
+-----
 
 <details>
 <summary><strong> ⚠️ Configurações mínimas para execução do projeto</strong></summary><br />
@@ -42,6 +46,8 @@ Na sua máquina você deve ter:
 
 </details>
 
+-----
+
 <details>
   <summary><strong>🐋 Rodando no Docker</strong></summary>
   
@@ -50,6 +56,8 @@ Na sua máquina você deve ter:
   > :information_source: Rode os serviços com o comando `docker-compose up -d --build`.
 
 </details>
+
+-----
 
 ## 🔎 Documentação da API
 
