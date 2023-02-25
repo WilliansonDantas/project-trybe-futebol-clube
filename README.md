@@ -206,6 +206,4 @@ npm run test:coverage
 
 -----
 
-⌨️ Baseado em [João Pedro Oliveira](https://github.com/jpoliveiramateus)
-
-
+⌨️ Desenvolvido por [Willianson Dantas](https://www.linkedin.com/in/willianson-dantas/)
